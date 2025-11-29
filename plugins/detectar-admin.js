@@ -29,7 +29,7 @@ handler.all = async function (m) {
     }
 };
 
-handler.help = ["autoadmin"];
+handler.help = ["autokick"];
 handler.tags = ["auto"];
 handler.command = []; 
 
