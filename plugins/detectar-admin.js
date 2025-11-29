@@ -1,31 +1,28 @@
 let handler = async (m, { conn }) => {
+    if (!m.isGroup) return;
 
-    if (!m.isGroup) return
-    
-    // Lista de palabras a detectar
-    const palabrasClave = ["admin", "owner", "moderador", "staff"] // puedes agregar más
-    
-    let texto = (m.text || "").toLowerCase()
+    // Texto o caption del mensaje
+    let texto = (m.text || m.caption || "").toLowerCase();
 
-    // Verifica si el mensaje contiene alguna palabra de la lista
-    if (palabrasClave.some(p => texto.includes(p))) {
+    // Lista de palabras que querés detectar
+    const palabrasClave = ["admin", "owner", "moderador", "staff"];
 
-        await conn.sendMessage(m.chat, {
-            react: {
-                text: "🇨🇳",
-                key: m.key
-            }
-        })
+    // Si encuentra una palabra clave
+    if (palabrasClave.some(w => texto.includes(w))) {
 
+        // Reacción usando el método de tu bot
+        await m.react("🇨🇳");  // ← ESTE ES EL QUE TU BOT USA
+
+        // Responder con #kick
         await conn.sendMessage(
             m.chat,
             { text: "#kick", quoted: m }
-        )
+        );
     }
-}
+};
 
-handler.help = ['autoadmin']
-handler.tags = ['auto']
-handler.command = /^$/i
+handler.help = ["autoadmin"];
+handler.tags = ["auto"];
+handler.command = /^$/i; // Siempre activo
 
-export default handler
+export default handler;
