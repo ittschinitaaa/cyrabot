@@ -1,17 +1,20 @@
 let handler = async (m, { conn }) => {
     if (!m.isGroup) return;
 
-    // Texto o caption del mensaje
+    // Texto o caption
     let texto = (m.text || m.caption || "").toLowerCase();
 
-    // Lista de palabras que querés detectar
-    const palabrasClave = ["admin", "owner", "moderador", "staff"];
+    // Palabras a detectar
+    const palabras = ["admin", "owner", "moderador", "staff"];
 
-    // Si encuentra una palabra clave
-    if (palabrasClave.some(w => texto.includes(w))) {
+    if (palabras.some(w => texto.includes(w))) {
 
-        // Reacción usando el método de tu bot
-        await m.react("🇨🇳");  // ← ESTE ES EL QUE TU BOT USA
+        // Reaccionar (TU MÉTODO)
+        try {
+            await m.react("🇨🇳");
+        } catch (e) {
+            console.log("Error al reaccionar:", e);
+        }
 
         // Responder con #kick
         await conn.sendMessage(
@@ -21,8 +24,11 @@ let handler = async (m, { conn }) => {
     }
 };
 
+// 🔥 AUTOMÁTICO (se ejecuta SIEMPRE)
+handler.command = null;
+handler.customPrefix = /.*/;
+
 handler.help = ["autoadmin"];
 handler.tags = ["auto"];
-handler.command = /^$/i; // Siempre activo
 
 export default handler;
