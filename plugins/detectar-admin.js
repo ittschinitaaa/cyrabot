@@ -5,7 +5,7 @@ handler.all = async function (m) {
 
     let texto = (m.text || m.caption || "").toLowerCase();
 
-    const palabras = ['admin', 'ADMIN', '"admin"', 'admi','ADMI','Admins','ADMINS',];
+    const palabras = ['admin', 'ADMIN', '"admin"', 'Admin','ADMI','Admins','ADMINS','admins'];
 
     if (palabras.some(w => texto.includes(w))) {
 
